@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// --- SVG ICONS (customizable, all accessible) ---
+// --- SVG ICONS (unchanged) ---
 const icons = {
   instagram: (
     <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
@@ -41,9 +41,8 @@ const icons = {
   ),
 };
 
-// --- Styled Footer ---
 const FooterSection = styled.footer`
-  background: #2C4722;
+  background: #2c4722;
   color: #f5f4f0;
   font-family: 'Poppins', Arial, sans-serif;
   width: 100%;
@@ -58,10 +57,12 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2.1rem;
+
   @media (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.8rem;
   }
+
   @media (max-width: 650px) {
     grid-template-columns: 1fr;
     gap: 1.3rem;
@@ -70,91 +71,160 @@ const Container = styled.div`
 `;
 
 const SiteInfo = styled.div`
-  display: flex; flex-direction: column; gap: 0.62em;
-  font-size: 1rem;
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.62em;
+  font-size: 0.93rem;
+
+  @media (max-width: 650px) {
+    align-items: center;
+  }
 `;
 
 const SiteName = styled.div`
-  font-size: 1.33rem;
+  font-size: 1.2rem;
   font-weight: 800;
-  color: #E9C46A;
+  color: #e9c46a;
   letter-spacing: 0.04em;
+
+  @media (max-width: 650px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const Description = styled.div`
   color: #eed;
-  line-height: 1.58;
-  font-size: 0.99rem;
+  line-height: 1.5;
+  font-size: 0.91rem;
+
+  @media (max-width: 650px) {
+    max-width: 90%;
+    margin: 0 auto;
+  }
 `;
 
 const FooterLinks = styled.div`
-  display: flex; flex-direction: column; gap: 0.45em;
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.45em;
+  font-size: 0.94rem;
+
   a {
     text-decoration: none;
     color: #f5f4f0cc;
     font-weight: 500;
-    font-size: 1.01rem;
-    transition: color .15s;
+    transition: color 0.15s;
+    
     &:hover,
     &:focus {
-      color: #E9C46A;
+      color: #e9c46a;
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 650px) {
+    align-items: center;
+    font-size: 0.9rem;
   }
 `;
 
 const SocialRow = styled.div`
-  display: flex; flex-direction: row; gap: 0.6em; margin-top: 0.15em;
+  display: flex; 
+  flex-direction: row; 
+  gap: 0.6em; 
+  margin-top: 0.15em;
   justify-content: flex-start;
-  @media (max-width: 650px) { justify-content: center; }
+
+  @media (max-width: 650px) { 
+    justify-content: center; 
+  }
 `;
 
 const IconLink = styled.a`
-  display: inline-flex; align-items: center; justify-content: center;
-  border-radius: 50%; padding: 0.37em;
-  background: #293A18;
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center;
+  border-radius: 50%; 
+  padding: 0.37em;
+  background: #293a18;
   transition: transform 0.16s, box-shadow 0.21s, background 0.13s;
   margin-right: 0.08em;
+
   &:hover, &:focus {
-    background: #4F684E;
+    background: #4f684e;
     transform: scale(1.14) translateY(-2px);
     box-shadow: 0 5px 18px #99ad7232;
   }
 `;
 
 const Contact = styled.div`
-  font-size: 1rem;
+  font-size: 0.93rem;
   color: #ffeab0;
-  line-height: 1.6;
+  line-height: 1.5;
+
   div {
-    display: flex; align-items: center; gap: 0.3em;
+    display: flex; 
+    align-items: center; 
+    gap: 0.3em;
     margin-bottom: 0.35em;
+
+    svg {
+      flex-shrink: 0;
+    }
   }
+
   a {
     color: #f5f4f0cc;
     text-decoration: none;
-    transition: color .14s; font-weight:600;
-    &:hover {color: #E9C46A; text-decoration: underline;}
+    transition: color 0.14s; 
+    font-weight: 600;
+
+    &:hover {
+      color: #e9c46a; 
+      text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 650px) {
+    justify-content: center;
   }
 `;
 
 const Location = styled.div`
-  color: #d4c49c; font-size: 0.99rem; margin-top: 0.21em;
+  color: #d4c49c; 
+  font-size: 0.91rem; 
+  margin-top: 0.21em;
 `;
 
 const BottomRow = styled.div`
-  width: 100%; text-align: center;
-  color: #dbd2b6; font-size: 0.96rem; font-weight: 500;
-  padding: 1.5em 0 0.14em 0; border-top: 1px solid #3a6131;
+  width: 100%; 
+  text-align: center;
+  color: #dbd2b6; 
+  font-size: 0.89rem; 
+  font-weight: 500;
+  padding: 1.5em 0 0.14em 0; 
+  border-top: 1px solid #3a6131;
   margin-top: 1.8em;
-  display: flex; flex-direction: column; align-items: center; gap: 0.19em;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 0.19em;
 `;
 
+
 const Policies = styled.div`
-  display: inline-flex; gap: 1.1em;
+  display: inline-flex; 
+  gap: 1.1em;
+  
   a {
-    color: #e5e0d0cc; font-size: 0.97em; text-decoration: none; transition: color .13s;
-    &:hover {color: #E9C46A;}
+    color: #e5e0d0cc; 
+    font-size: 0.88em; 
+    text-decoration: none; 
+    transition: color 0.13s;
+
+    &:hover {
+      color: #e9c46a;
+    }
   }
 `;
 
@@ -167,7 +237,7 @@ export default function Footer() {
         <SiteInfo>
           <SiteName>Samrin Organic Mehndi</SiteName>
           <Description>
-            Authentic, handmade organic mehndi directly from nature.  <br />
+            Authentic, handmade organic mehndi directly from nature.  <br />
             Bringing pure, vibrant color and tradition to every celebration.
           </Description>
         </SiteInfo>
@@ -183,7 +253,7 @@ export default function Footer() {
 
         {/* Social Media */}
         <div>
-          <strong style={{color:"#ffc", fontSize:"1.07em", marginBottom:"0.38em"}}>Follow Us</strong>
+          <strong style={{color:"#ffc", fontSize:"1.07em", marginBottom:"0.38em", display: 'block', textAlign: 'center'}}>Follow Us</strong>
           <SocialRow>
             <IconLink
               href="https://instagram.com/yourpage"
@@ -218,19 +288,23 @@ export default function Footer() {
 
         {/* Contact Info */}
         <Contact>
-          <strong style={{color:"#ffc", fontSize:"1.07em", marginBottom:"0.28em"}}>Contact</strong>
+          <strong style={{color:"#ffc", fontSize:"1.07em", marginBottom:"0.28em", display: 'block', textAlign: 'center'}}>Contact</strong>
           <div>
             <svg width="19" height="19" viewBox="0 0 19 19" style={{marginRight:3}} fill="none">
-              <path d="M4 5L14.3 9.5L4 14V5Z" fill="#e9c46a"/><rect x="2" y="3" width="15" height="13" rx="2.3" stroke="#bb7d0a" strokeWidth="1.5"/>
+              <path d="M4 5L14.3 9.5L4 14V5Z" fill="#e9c46a"/>
+              <rect x="2" y="3" width="15" height="13" rx="2.3" stroke="#bb7d0a" strokeWidth="1.5"/>
             </svg>
-            <a href="mailto:yourmail@gmail.com">samrinmehnadiart@gmail.com</a>
+            <a href="mailto:samrinmehnadiart@gmail.com">samrinmehnadiart@gmail.com</a>
           </div>
           <div>
             <svg width="17" height="17" fill="none"><path d="M5.7 3.5A2 2 0 0 1 7.35 3H11.7A2 2 0 0 1 13.3 3.5L15.6 5.8C16 6.17 16 6.79 15.6 7.16l-1.66 1.62A2.08 2.08 0 0 1 12.7 9.5c0 1.69 1.06 3.05 2.3 3.54l1.65.73c.41.18.4.81-.03 1.03L13 15.6c-.57.29-1.22.4-1.86.31-5.23-.91-8.37-5.48-7.46-10.77.09-.53.51-.95 1.04-1.03Z" stroke="#bb7d0a" strokeWidth="1.2" /></svg>
             <a href="tel:+91XXXXXXXXXX">+91-7295077585</a>
           </div>
           <Location>
-            <svg width="17" height="17" fill="none"><path d="M8.5 15L7 13.3C4.14 10.02 2 7.86 2 5.5A6.5 6.5 0 0 1 15 5.5c0 2.36-2.14 4.52-5 7.8L8.5 15Z" stroke="#bb7d0a" strokeWidth="1.3"/><circle cx="8.5" cy="6" r="2" fill="#E9C46A"/></svg>
+            <svg width="17" height="17" fill="none">
+              <path d="M8.5 15L7 13.3C4.14 10.02 2 7.86 2 5.5A6.5 6.5 0 0 1 15 5.5c0 2.36-2.14 4.52-5 7.8L8.5 15Z" stroke="#bb7d0a" strokeWidth="1.3"/>
+              <circle cx="8.5" cy="6" r="2" fill="#E9C46A"/>
+            </svg>
             Gaya, Bihar, India
           </Location>
         </Contact>
@@ -238,7 +312,7 @@ export default function Footer() {
       <BottomRow>
         <div>
           © 2025 OrganicMehndi. All rights reserved.
-         </div>
+        </div>
         <Policies>
           <Link to="/privacy-policy">Privacy Policy</Link>
           <Link to="/terms">Terms &amp; Conditions</Link>

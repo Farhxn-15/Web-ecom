@@ -8,11 +8,19 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase"; // <-- adjust if your firebase.js is elsewhere
 
 const Page = styled.main`
-  background: #f5f4f0; color: #2e4d25; min-height: 100vh; display: flex; flex-direction: column;
+  background: #f5f4f0;
+  color: #2e4d25;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
+
 const CarouselWrapper = styled.section`
-  width: 100vw; margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 `;
+
 const SlideImage = styled.img`
   width: 100vw;
   height: auto;
@@ -34,85 +42,182 @@ const SlideImage = styled.img`
   }
 `;
 
-
 const Intro = styled.section`
-  max-width: 780px; margin: 2.2rem auto 0; text-align: center; padding: 0 1rem;
+  max-width: 780px;
+  margin: 2.2rem auto 0;
+  text-align: center;
+  padding: 0 1rem;
 `;
+
 const Heading = styled.h1`
-  color: #40652a; font-size: 2.3rem; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: 0.02em;
+  color: #40652a;
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.02em;
+
+  @media (max-width: 600px) {
+    font-size: 1.75rem;
+  }
 `;
+
 const SubHeading = styled.h2`
   color: #7c6a43;
-  font-size: 1.2rem; font-weight: 400; margin-bottom: 1.5rem; letter-spacing: 0.01em;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.01em;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
 `;
+
 const ProductsArea = styled.section`
-  max-width: 1120px; margin: 2rem auto 2.5rem; padding: 2.2rem 1.2rem;
+  max-width: 1120px;
+  margin: 2rem auto 2.5rem;
+  padding: 2.2rem 1.2rem;
   background: #eceadd;
   border-radius: 1.07rem;
   box-shadow: 0 2px 14px rgba(104,96,48,0.07);
 `;
+
 const ProductsGrid = styled.div`
   display: grid;
   grid-gap: 2.1rem;
-  grid-template-columns: repeat(1, 1fr);
-  @media (min-width: 600px) { grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 950px) { grid-template-columns: repeat(3, 1fr); }
+
+  /* Show 2 columns on mobile phones (>= 360px) */
+  grid-template-columns: repeat(2, 1fr);
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 950px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   margin-bottom: 1rem;
 `;
+
 const Card = styled.div`
   background: #f8f6ef;
   border-radius: 1rem;
   box-shadow: 0 3px 14px rgba(120, 70, 6, 0.09);
   padding: 1.3rem 1.1rem 1.5rem;
-  display: flex; flex-direction: column; align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transition: transform 0.15s, box-shadow 0.25s;
+
   &:hover {
     transform: translateY(-7px) scale(1.03);
     box-shadow: 0 12px 28px rgba(120, 70, 6, 0.13);
   }
+
+  @media (max-width: 600px) {
+    padding: 1rem 0.9rem 1.3rem;
+  }
 `;
+
 const ProductImg = styled.img`
-  width: 171px;      // Increased from 143px
-  height: 171px;     // Increased from 143px
+  width: 143px; /* slightly smaller on mobile */
+  height: 143px;
   object-fit: cover;
   border-radius: 0.7rem;
   box-shadow: 0 2px 7px rgba(120, 100, 30, 0.13);
   margin-bottom: 1.1rem;
   background: #e3decf;
+
+  @media (max-width: 600px) {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 0.95rem;
+  }
 `;
 
 const ProductTitle = styled.div`
-  font-size: 1.14rem; font-weight: 700; color: #3e5321; margin-bottom: 0.18rem; text-align: center;
+  font-size: 1.14rem;
+  font-weight: 700;
+  color: #3e5321;
+  margin-bottom: 0.18rem;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 `;
+
 const ProductLabel = styled.div`
   background: linear-gradient(90deg, #a89168 60%, #c9c57d 100%);
-  color: #fff; font-size: 0.98rem; font-weight: 600;
+  color: #fff;
+  font-size: 0.98rem;
+  font-weight: 600;
   padding: 0.27em 1em;
   border-radius: 1em;
-  margin-bottom: 0.34rem; letter-spacing:0.04em; display: inline-block;
+  margin-bottom: 0.34rem;
+  letter-spacing: 0.04em;
+  display: inline-block;
+
+  @media (max-width: 600px) {
+    font-size: 0.85rem;
+    padding: 0.22em 0.9em;
+  }
 `;
+
 const ProductQty = styled.div`
-  color: #665429; font-size: 1rem; font-weight: 500; margin-bottom: 1.2rem;
+  color: #665429;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
 `;
+
 const ProductPrice = styled.div`
-  color: #40652a; font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem;
+  color: #40652a;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+
+  @media (max-width: 600px) {
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+  }
 `;
+
 const ButtonsRow = styled.div`
-  display: flex; flex-direction: row; gap: 0.65rem; width: 100%; margin-top: auto; justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.65rem;
+  width: 100%;
+  margin-top: auto;
+  justify-content: center;
 `;
+
 const Button = styled.button`
-  flex: 1 1 0; min-width: 96px;
+  flex: 1 1 0;
+  min-width: 96px;
   background: ${({variant}) => variant === 'primary'
     ? "linear-gradient(90deg, #40652a 60%, #a89168 100%)"
     : "#fff"};
   color: ${({variant}) => variant === 'primary' ? "#fffef6" : "#40652a"};
   border: ${({variant}) => variant === 'primary' ? "none" : "1px solid #a89168"};
-  padding: 0.54em 0.1em; font-size: 1.01rem; font-weight: 600;
-  border-radius: 0.6em; margin-top: 0.06em;
+  padding: 0.54em 0.1em;
+  font-size: 1.01rem;
+  font-weight: 600;
+  border-radius: 0.6em;
+  margin-top: 0.06em;
   box-shadow: 0 1.5px 3px rgba(104,96,48,0.06);
   cursor: pointer;
   transition: background 0.18s, color 0.16s, box-shadow 0.19s, border 0.16s;
-  &:active { filter: brightness(0.97);}
+
+  &:active {
+    filter: brightness(0.97);
+  }
   &:hover {
     background: ${({variant}) => variant === 'primary'
       ? "linear-gradient(90deg, #4c7835 70%, #b5996c 100%)"
@@ -120,26 +225,45 @@ const Button = styled.button`
     color: ${({variant}) => variant === 'primary' ? "#fff" : "#5d4517"};
     border-color: #b5996c;
   }
-`;
-const Notification = styled.div`
-  background: #e5f9de; color: #3d6920; border-radius: 0.6em;
-  margin: 1.1rem auto 0; padding: 0.8rem 1em; max-width: 390px; text-align: center;
-  font-weight: 600; font-size: 1.08rem; letter-spacing: 0.01em;
+
+  @media (max-width: 600px) {
+    font-size: 0.9rem;
+    min-width: 80px;
+    padding: 0.45em 0.1em;
+  }
 `;
 
-// --- Update sliderImages with your own local image(s) ---
+const Notification = styled.div`
+  background: #e5f9de;
+  color: #3d6920;
+  border-radius: 0.6em;
+  margin: 1.1rem auto 0;
+  padding: 0.8rem 1em;
+  max-width: 390px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+    max-width: 100%;
+    padding: 0.7rem 0.9rem;
+  }
+`;
+
 const sliderImages = [
   "/i0.jpg",
   "/i1.jpg",
   "/i2.jpg",
-  "/i3.jpg", // <-- add your image file(s) here (placed in public folder)
+  "/i3.jpg",
   "/i4.jpg",
   "/i5.jpg",
   "/i6.jpg",
   "/i7.jpg",
   "/i8.jpg",
   "/i9.jpg",
-  // You can add more: "/mehndi-organic/banner2.jpg",
+  // Add more images if needed
 ];
 
 const sliderSettings = {
@@ -161,7 +285,6 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Load products from Firestore
   useEffect(() => {
     async function fetchProducts() {
       try {
@@ -219,7 +342,6 @@ export default function Home() {
   return (
     <>
       <Page>
-        {/* IMAGE SLIDER */}
         <CarouselWrapper>
           <Slider {...sliderSettings}>
             {sliderImages.map((img, idx) => (
@@ -230,13 +352,11 @@ export default function Home() {
           </Slider>
         </CarouselWrapper>
 
-        {/* INTRO */}
         <Intro>
           <Heading>100% Organic Mehndi</Heading>
           <SubHeading>Natural. Pure. Traditional.</SubHeading>
         </Intro>
 
-        {/* PRODUCT CARDS */}
         <ProductsArea>
           <h3
             style={{

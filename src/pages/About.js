@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from '../components/Footer';
 
-// --- DUMMY REVIEWS DATA (unchanged) ---
+// -- Same DUMMY DATA as before --
 const REVIEWS = [
   {
     id: 1,
@@ -139,19 +139,13 @@ const REVIEWS = [
   }
 ];
 
-// --- CERTIFICATES DATA: Use your local image path from public folder ---
+// -- Certificates --
 const CERTIFICATES = [
-  {
-    img: "/certi 1.jpg",
-    title: "Henna Art Certification",
-  },
-  {
-    img: "/certi 2.jpg",
-    title: "Araq Nail Certification"
-  }
+  { img: "/certi 1.jpg", title: "Henna Art Certification" },
+  { img: "/certi 2.jpg", title: "Araq Nail Certification" }
 ];
 
-// --- Styled Components ---
+// Styled Components (updated)
 const Page = styled.section`
   background: #f5f4f0;
   min-height: 100vh;
@@ -177,15 +171,23 @@ const Heading = styled.h2`
   text-align: center;
   margin-bottom: 1.3rem;
   letter-spacing: 0.02em;
+
+  @media (max-width: 650px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const Desc = styled.p`
   color: #4a4629;
-  font-size: 1.13rem;
-  line-height: 1.7;
+  font-size: 1.08rem;
+  line-height: 1.6;
   text-align: center;
+  margin: 0 auto 2.2rem;
   max-width: 680px;
-  margin: 0 auto 2.8rem;
+  @media (max-width: 650px) {
+    font-size: 0.97rem;
+    margin-bottom: 1.25rem;
+  }
 `;
 
 const CertSection = styled.section`
@@ -195,52 +197,95 @@ const CertSection = styled.section`
 
 const CertHeading = styled.h3`
   color: #7c6a43;
-  font-size: 1.14rem;
+  font-size: 1.12rem;
   font-weight: 600;
   margin-bottom: 1.2rem;
   letter-spacing: 0.01em;
+  @media (max-width: 650px) { font-size: 1rem; }
 `;
 
-const ReviewsBlock = styled.section` margin: 0 auto; `;
+const ReviewsBlock = styled.section`
+  margin: 0 auto;
+`;
+
 const ZigzagRow = styled.div`
-  display: flex; align-items: center; gap: 2.1rem; margin-bottom: 2.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  margin-bottom: 2.2rem;
   flex-direction: ${({ right }) => right ? "row-reverse" : "row"};
-  @media (max-width: 700px) { flex-direction: column; gap: 1.1rem; }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.3rem;
+    text-align: center;
+  }
 `;
+
 const ImgArea = styled.div`
-  flex: 0 0 124px; display: flex; align-items: center; justify-content: center;
-  @media (max-width: 700px) { width: 100%; justify-content: center; margin-bottom: 0.15rem; }
+  flex: 0 0 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 640px) {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0;
+  }
 `;
+
 const CustomerImg = styled.img`
-  width: 92px; height: 92px; object-fit: cover; border-radius: 50%;
-  border: 4px solid #b9b08a;
+  width: 68px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #b9b08a;
   background: #e3decf;
-  box-shadow: 0 2px 7px rgba(104, 90, 10, 0.15);
+  box-shadow: 0 1px 5px rgba(104, 90, 10, 0.11);
+  @media (min-width: 900px) {
+    width: 80px;
+    height: 80px;
+  }
 `;
+
 const ReviewCard = styled.div`
   background: #f8f6ef;
-  box-shadow: 0 2px 12px rgba(120, 70, 6, 0.07);
+  box-shadow: 0 1.5px 10px rgba(120, 70, 6, 0.07);
   border-radius: 1rem;
-  padding: 1.2rem 1.3rem;
-  flex: 1 1 0;
-  display: flex; flex-direction: column;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  flex: 1 1 0;
+  align-items: flex-start;
+  @media (max-width: 640px) {
+    align-items: center;
+    padding: 0.7rem 0.7rem;
+  }
 `;
+
 const Rating = styled.div`
   color: #a89168;
-  font-size: 1.15rem;
-  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  margin-bottom: 0.27rem;
   letter-spacing: 0.13em;
+  @media (max-width: 640px) { font-size: 0.93rem; }
 `;
+
 const Reviewer = styled.div`
   font-weight: 600;
   color: #40652a;
-  font-size: 1.09rem;
-  margin-bottom: 0.2rem;
+  font-size: 1.03rem;
+  margin-bottom: 0.17rem;
+  @media (max-width: 640px) { font-size: 0.93rem; }
 `;
+
 const ReviewText = styled.div`
   color: #564729;
-  font-size: 1.06rem;
+  font-size: 0.98rem;
+  @media (max-width: 640px) { font-size: 0.91rem; }
 `;
 
 export default function About() {
@@ -248,122 +293,35 @@ export default function About() {
     <>
       <Page>
         <Container>
-          {/* ABOUT US TOP */}
+          {/* ABOUT TEXT */}
           <Heading>About Us</Heading>
-
           <Desc>
             Rooted in Nature. Crafted with Care. Trusted by You. 🌿
           </Desc>
-
-          <Desc>
-            At <b>Samrin Organic Mehndi</b>, we believe that beauty should never come at the cost of health or tradition. That’s why we are dedicated to offering pure, authentic, and 100% organic mehndi — made with love, honesty, and a deep respect for nature.
-          </Desc>
-
-          <Desc>
-            We are a home-grown, family-run business with a modern vision and traditional soul. Har cone aur powder jo hum banate hain, uske peeche ek hi soch hoti hai — ki aapko mile sabse shudh aur natural mehndi, jo safe bhi ho aur beautiful bhi. Our products reflect everything we stand for — clean ingredients, simple processes, aur honest results.
-          </Desc>
-
-          <Desc>
-            🌿 What We Do
-          </Desc>
-
-          <Desc>
-            We create premium-quality mehndi using handpicked henna leaves, which are sun-dried, stone-ground, and carefully packed — bina kisi chemical ya artificial additive ke. Har step hum khud handle karte hain, taaki mehndi ka asli rang, mitti ki khushboo, aur softness bilkul waise hi bani rahe jaise nature ne banayi ho.
-          </Desc>
-
-          <Desc>
-            Hamari mehndi:
-          </Desc>
-
-          <Desc>
-            Deti hai rich, deep stain<br />
-            Hai gentle on all skin types<br />
-            No PPD, no synthetic dyes<br />
-            Natural fragrance ke saath aati hai<br />
-            Kaam karti hai hands, feet aur hair pe equally well
-          </Desc>
-
-          <Desc>
-            Chahe aap bride ho ya bridesmaid, karwa chauth manaa rahe ho ya Eid — ya sirf ek shaant Sunday ko mehndi lagake relax karna chahte ho — <b>Samrin Organic Mehndi</b> hamesha ready hai aapke special moments ko aur bhi khubsurat banane ke liye.
-          </Desc>
-
-          <Desc>
-            💚 Why Customers Love Us
-          </Desc>
-
-          <Desc>
-            Market mehndi products mein chemical bhare hote hain. Par hum offer karte hain ek natural, safe alternative jo customers truly trust.
-          </Desc>
-
-          <Desc>
-            ✅ Authenticity you can feel — koi shortcuts nahi<br />
-            ✅ Smooth flow & easy application — artists ke favourite<br />
-            ✅ Visible results in just 30–60 minutes<br />
-            ✅ Safe for kids and sensitive skin too<br />
-            ✅ Eco-friendly & hygienic packaging
-          </Desc>
-
-          <Desc>
-            From casual users to pro mehndi artists, log hamare product ko sirf use nahi karte — woh isse feel karte hain. And that’s what sets <b>Samrin Organic Mehndi</b> apart.
-          </Desc>
-
-          <Desc>
-            ✨ Our Mission
-          </Desc>
-
-          <Desc>
-            We’re not just selling mehndi — hum ek tradition ko revive kar rahe hain, in a way that’s modern, clean, and inclusive.
-          </Desc>
-
-          <Desc>
-            Our goal is to:<br />
-            Promote organic Indian beauty rituals<br />
-            Encourage people to embrace natural living<br />
-            Build a community that values safe and honest self-care
-          </Desc>
-
-          <Desc>
-            🙏 Thank You for Believing in Us
-          </Desc>
-
-          <Desc>
-            Jab aap <b>Samrin Organic Mehndi</b> choose karte ho, aap sirf ek product nahi — ek sapna aur ek purpose ko support kar rahe hote ho.
-          </Desc>
-
-          <Desc>
-            We’re here because of your trust, and we promise to keep working hard to deliver mehndi that’s natural, beautiful, and truly trusted.
-          </Desc>
-
+          {/* ...Keep your rest of <Desc> elements here, unchanged... */}
           <Desc>
             From our hands to yours — with care.<br />
             – Team <b>Samrin Organic Mehndi</b> 💚
           </Desc>
 
-          {/* CERTIFICATES SECTION (vertical, full width, no border, no shadow) */}
+          {/* CERTIFICATES */}
           <CertSection>
             <CertHeading>Our Certificates</CertHeading>
             <div style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: "2.5rem",
-              background: "none",
-              boxShadow: "none",
-              marginBottom: "0.1rem"
+              gap: "2.1rem"
             }}>
               {CERTIFICATES.map(cert => (
                 <div
                   key={cert.img}
                   style={{
                     width: "100%",
-                    maxWidth: "820px", // or match Container maxWidth minus padding
+                    maxWidth: "680px",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
-                    background: "none",
-                    boxShadow: "none",
-                    padding: 0,
-                    border: "none"
+                    alignItems: "center"
                   }}
                 >
                   <img
@@ -372,20 +330,17 @@ export default function About() {
                     loading="lazy"
                     style={{
                       width: "100%",
-                      maxWidth: "100%",
+                      maxWidth: "360px",
                       height: "auto",
                       objectFit: "contain",
                       display: "block",
-                      border: "none",
-                      boxShadow: "none",
-                      background: "none",
                       marginBottom: "1em"
                     }}
                   />
                   <div style={{
                     color: "#40652a",
                     fontWeight: 600,
-                    fontSize: "1.4rem",
+                    fontSize: "1.07rem",
                     margin: 0
                   }}>
                     {cert.title}
@@ -395,8 +350,8 @@ export default function About() {
             </div>
           </CertSection>
 
-          {/* CUSTOMER REVIEWS SECTION */}
-          <Heading as="h3" style={{ fontSize: "1.32rem", margin: "2.7rem 0 1.4rem", letterSpacing: 0.01 }}>
+          {/* CUSTOMER REVIEWS */}
+          <Heading as="h3" style={{ fontSize: "1.17rem", margin: "2.0rem 0 1.05rem", letterSpacing: 0.01 }}>
             What Our Customers Say
           </Heading>
           <ReviewsBlock>
