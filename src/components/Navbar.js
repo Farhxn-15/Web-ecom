@@ -29,6 +29,7 @@ const NavContent = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   position: relative;
+
   @media (max-width: 640px) {
     padding: 0.5rem 0.5rem;
   }
@@ -37,7 +38,7 @@ const NavContent = styled.div`
 const LogoRow = styled.div`
   display: flex;
   align-items: center;
-  min-width: 0;  /* NEW: allow text to shrink */
+  min-width: 0;  /* allow shrinking */
   flex-shrink: 1;
 `;
 
@@ -60,6 +61,7 @@ const LogoImg = styled.div`
   font-weight: bold;
   font-size: 1.36rem;
   color: #40652a;
+
   @media (max-width: 640px) {
     width: 28px;
     height: 28px;
@@ -73,7 +75,7 @@ const SiteTitle = styled.span`
   font-weight: bold;
   color: #fff8f0;
   letter-spacing: 0.2px;
-  /* Remove forced max-width and white-space if present */
+
   @media (max-width: 500px) {
     font-size: 1rem;
     max-width: unset;
@@ -108,6 +110,7 @@ const AuthBtn = styled(Link)`
   margin-right: 0.37em;
   text-decoration: none;
   transition: background 0.17s, color 0.17s, border 0.14s;
+
   &:hover,
   &:focus {
     background: #e6ebd7;
@@ -115,6 +118,7 @@ const AuthBtn = styled(Link)`
     border-color: #b5996c;
     outline: none;
   }
+
   @media (max-width: 640px) {
     margin-right: 0;
     width: 100%;
@@ -129,6 +133,7 @@ const NavLinks = styled.nav`
   display: flex;
   justify-content: center;
   gap: 1.4rem;
+
   @media (max-width: 640px) {
     flex-direction: column;
     width: 100%;
@@ -151,11 +156,13 @@ const StyledLink = styled(Link)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
   &:hover,
   &:focus {
     color: #a89168;
     outline: none;
   }
+
   @media (max-width: 640px) {
     display: block;
     padding: 0.32rem 0;
@@ -164,21 +171,26 @@ const StyledLink = styled(Link)`
   }
 `;
 
-// Cart Button and Badge
+// Cart Button and Badge (for desktop and internal menu)
 const CartBtn = styled.button`
-  /* ...existing styles... */
-  @media (max-width: 640px) {
-    width: 100%;
-    margin-top: 0.5rem;
-    margin-left: 0;
-    align-self: stretch;
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
-    min-width: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.15em 0.5em;
+  display: flex;
+  align-items: center;
+  transition: transform 0.13s;
+  margin-left: 1.3em;
+  position: relative;
 
-    svg { width: 20px; height: 20px; }
-    span { margin-left: 6px; font-size: 13px; }
+  &:hover,
+  &:focus {
+    transform: scale(1.12);
+    outline: none;
+  }
+
+  @media (max-width: 640px) {
+    display: none; /* Hide inside mobile collapsible menu, since we'll use CartBtnMobile */
   }
 `;
 
@@ -189,6 +201,7 @@ const CartIcon = styled.span`
     display: block;
     width: 23px;
     height: 23px;
+
     @media (max-width: 640px) {
       width: 22px;
       height: 22px;
@@ -210,6 +223,30 @@ const CartBadge = styled.span`
   border: 2px solid #fff;
 `;
 
+// Mobile-only Cart Button (left of hamburger)
+const CartBtnMobile = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  position: relative;
+  margin-right: 0.13em;
+  padding: 0.16em 0.19em;
+  cursor: pointer;
+
+  @media (max-width: 640px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    min-height: 38px;
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+`;
+
 const LogoutBtn = styled.button`
   background: none;
   border: none;
@@ -219,11 +256,13 @@ const LogoutBtn = styled.button`
   font-size: 0.98rem;
   cursor: pointer;
   transition: color 0.17s;
+
   &:hover,
   &:focus {
     color: #e9c46a;
     outline: none;
   }
+
   @media (max-width: 640px) {
     margin: 0.7rem 0 0 0;
     width: 100%;
@@ -243,9 +282,11 @@ const MobileMenuButton = styled.button`
   font-size: 2rem;
   margin-left: auto;
   padding: 0.25rem 0.51rem;
+
   @media (max-width: 640px) {
     display: block;
   }
+
   &:focus {
     outline: 2px solid #a89168;
     outline-offset: 2px;
@@ -273,24 +314,23 @@ const DesktopMenuContainer = styled.div`
   align-items: center;
   gap: 0.8em;
   margin-left: auto;
+
   @media (max-width: 640px) {
     display: none !important;
   }
 `;
 
+// Navbar Component
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Mobile menu open state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Read user session from localStorage
   const [user, setUser] = useState(() =>
     JSON.parse(localStorage.getItem("mehndi_loggedin_user") || "null")
   );
 
-  // Cart count (total qty in cart)
   const [cartCount, setCartCount] = useState(() => {
     try {
       const cart = JSON.parse(localStorage.getItem("mehndi_cart") || "[]");
@@ -306,6 +346,7 @@ const Navbar = () => {
       setCartCount(cart.reduce((acc, item) => acc + (item.qty || 1), 0));
       setUser(JSON.parse(localStorage.getItem("mehndi_loggedin_user") || "null"));
     }, 600);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -316,10 +357,7 @@ const Navbar = () => {
     setMobileMenuOpen(false);
   }
 
-  // Toggle mobile menu visibility
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-  };
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
   return (
     <NavbarContainer>
@@ -331,7 +369,37 @@ const Navbar = () => {
           </LogoWrapper>
         </LogoRow>
 
-        {/* Mobile menu toggle button */}
+        {/* Mobile Cart Button - only visible on mobile, left of hamburger */}
+        {user && (
+          <CartBtnMobile
+            onClick={() => navigate("/payment")}
+            aria-label="Cart"
+            title="Cart"
+          >
+            <CartIcon>
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 27 27"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle cx="12" cy="23" r="1.6" fill="#a89168" />
+                <circle cx="21" cy="23" r="1.6" fill="#a89168" />
+                <path
+                  d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1"
+                  stroke="#fff"
+                  strokeWidth="1.6"
+                  fill="none"
+                />
+              </svg>
+              {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
+            </CartIcon>
+          </CartBtnMobile>
+        )}
+
+        {/* Hamburger menu toggle */}
         <MobileMenuButton
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileMenuOpen}
@@ -341,15 +409,14 @@ const Navbar = () => {
           {mobileMenuOpen ? '✕' : '☰'}
         </MobileMenuButton>
 
-        {/* Mobile menu */}
-        <MobileMenuContainer id="mobile-menu" className={mobileMenuOpen ? 'open' : ''}>
+        {/* Mobile menu content */}
+        <MobileMenuContainer id="mobile-menu" className={mobileMenuOpen ? "open" : ""}>
           <NavLinks>
             <StyledLink to="/" active={location.pathname === "/"} onClick={() => setMobileMenuOpen(false)}>Home</StyledLink>
             <StyledLink to="/about" active={location.pathname === "/about"} onClick={() => setMobileMenuOpen(false)}>About Us</StyledLink>
             <StyledLink to="/contact" active={location.pathname === "/contact"} onClick={() => setMobileMenuOpen(false)}>Contact Us</StyledLink>
           </NavLinks>
 
-          {/* Auth buttons */}
           {!user && (
             <AuthContainer>
               <AuthBtn to="/login" onClick={() => setMobileMenuOpen(false)}>Login</AuthBtn>
@@ -357,30 +424,13 @@ const Navbar = () => {
             </AuthContainer>
           )}
 
-          {/* Cart and logout for logged in user */}
+          {/* For mobile menu, CartBtn is hidden since CartBtnMobile is visible */}
           {user && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "0", width: '100%' }}>
-              <CartBtn
-                onClick={() => { navigate("/payment"); setMobileMenuOpen(false); }}
-                aria-label="Cart"
-                style={{ width: '100%' }}
-              >
-                <CartIcon>
-                  <svg width="22" height="22" viewBox="0 0 27 27" fill="none" aria-hidden="true" focusable="false">
-                    <circle cx="12" cy="23" r="1.6" fill="#a89168" />
-                    <circle cx="21" cy="23" r="1.6" fill="#a89168" />
-                    <path d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1" stroke="#fff" strokeWidth="1.6" fill="none" />
-                  </svg>
-                  {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
-                  <span style={{ marginLeft: 7, fontSize: 13, color: "#fffdf6" }}>Cart</span>
-                </CartIcon>
-              </CartBtn>
-              <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>
-            </div>
+            <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>
           )}
         </MobileMenuContainer>
 
-        {/* Desktop menu visible only on desktop */}
+        {/* Desktop menu */}
         <DesktopMenuContainer>
           <NavLinks>
             <StyledLink to="/" active={location.pathname === "/"}>Home</StyledLink>
@@ -395,12 +445,24 @@ const Navbar = () => {
             </AuthContainer>
           )}
 
-          <CartBtn onClick={() => navigate("/payment")} aria-label="Cart">
+          <CartBtn onClick={() => navigate("/payment")} aria-label="Cart" title="Cart">
             <CartIcon>
-              <svg width="23" height="23" viewBox="0 0 27 27" fill="none" aria-hidden="true" focusable="false">
+              <svg
+                width="23"
+                height="23"
+                viewBox="0 0 27 27"
+                fill="none"
+                aria-hidden="true"
+                focusable="false"
+              >
                 <circle cx="12" cy="23" r="1.6" fill="#a89168" />
                 <circle cx="21" cy="23" r="1.6" fill="#a89168" />
-                <path d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1" stroke="#fff" strokeWidth="1.6" fill="none" />
+                <path
+                  d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1"
+                  stroke="#fff"
+                  strokeWidth="1.6"
+                  fill="none"
+                />
               </svg>
               {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
             </CartIcon>
