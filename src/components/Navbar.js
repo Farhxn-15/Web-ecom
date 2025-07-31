@@ -128,7 +128,6 @@ const AuthBtn = styled(Link)`
   }
 `;
 
-// Navigation Links container
 const NavLinks = styled.nav`
   display: flex;
   justify-content: center;
@@ -142,7 +141,6 @@ const NavLinks = styled.nav`
   }
 `;
 
-// Individual styled Link
 const StyledLink = styled(Link)`
   color: ${({ active }) => (active ? '#c4db8c' : '#fffdf6')};
   text-decoration: none;
@@ -171,7 +169,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-// Cart Button and Badge (for desktop and internal menu)
+// Cart Button (desktop menu and internal menu) hidden on mobile
 const CartBtn = styled.button`
   background: none;
   border: none;
@@ -190,7 +188,7 @@ const CartBtn = styled.button`
   }
 
   @media (max-width: 640px) {
-    display: none; /* Hide inside mobile collapsible menu, since we'll use CartBtnMobile */
+    display: none; /* Hidden on mobile because CartBtnMobile used */
   }
 `;
 
@@ -223,7 +221,7 @@ const CartBadge = styled.span`
   border: 2px solid #fff;
 `;
 
-// Mobile-only Cart Button (left of hamburger)
+// Mobile-only Cart Button to the left of hamburger menu
 const CartBtnMobile = styled.button`
   display: none;
   background: none;
@@ -272,7 +270,6 @@ const LogoutBtn = styled.button`
   }
 `;
 
-// Hamburger / Toggle Button for Mobile menu
 const MobileMenuButton = styled.button`
   background: none;
   border: none;
@@ -293,7 +290,6 @@ const MobileMenuButton = styled.button`
   }
 `;
 
-// Mobile Menu Container
 const MobileMenuContainer = styled.div`
   display: none;
   flex-direction: column;
@@ -320,7 +316,6 @@ const DesktopMenuContainer = styled.div`
   }
 `;
 
-// Navbar Component
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -350,6 +345,15 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // When cart clicked, force login if not authenticated
+  const handleCartClick = () => {
+    if (!user) {
+      navigate("/login", { state: { from: "/payment" } });
+    } else {
+      navigate("/payment");
+    }
+  };
+
   function handleLogout() {
     localStorage.removeItem("mehndi_loggedin_user");
     setUser(null);
@@ -370,34 +374,32 @@ const Navbar = () => {
         </LogoRow>
 
         {/* Mobile Cart Button - only visible on mobile, left of hamburger */}
-        {user && (
-          <CartBtnMobile
-            onClick={() => navigate("/payment")}
-            aria-label="Cart"
-            title="Cart"
-          >
-            <CartIcon>
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 27 27"
+        <CartBtnMobile
+          onClick={handleCartClick}
+          aria-label="Cart"
+          title="Cart"
+        >
+          <CartIcon>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 27 27"
+              fill="none"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <circle cx="12" cy="23" r="1.6" fill="#a89168" />
+              <circle cx="21" cy="23" r="1.6" fill="#a89168" />
+              <path
+                d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1"
+                stroke="#fff"
+                strokeWidth="1.6"
                 fill="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <circle cx="12" cy="23" r="1.6" fill="#a89168" />
-                <circle cx="21" cy="23" r="1.6" fill="#a89168" />
-                <path
-                  d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1"
-                  stroke="#fff"
-                  strokeWidth="1.6"
-                  fill="none"
-                />
-              </svg>
-              {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
-            </CartIcon>
-          </CartBtnMobile>
-        )}
+              />
+            </svg>
+            {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
+          </CartIcon>
+        </CartBtnMobile>
 
         {/* Hamburger menu toggle */}
         <MobileMenuButton
@@ -406,36 +408,51 @@ const Navbar = () => {
           onClick={toggleMobileMenu}
           aria-controls="mobile-menu"
         >
-          {mobileMenuOpen ? '✕' : '☰'}
+          {mobileMenuOpen ? "✕" : "☰"}
         </MobileMenuButton>
 
         {/* Mobile menu content */}
         <MobileMenuContainer id="mobile-menu" className={mobileMenuOpen ? "open" : ""}>
           <NavLinks>
-            <StyledLink to="/" active={location.pathname === "/"} onClick={() => setMobileMenuOpen(false)}>Home</StyledLink>
-            <StyledLink to="/about" active={location.pathname === "/about"} onClick={() => setMobileMenuOpen(false)}>About Us</StyledLink>
-            <StyledLink to="/contact" active={location.pathname === "/contact"} onClick={() => setMobileMenuOpen(false)}>Contact Us</StyledLink>
+            <StyledLink to="/" active={location.pathname === "/"} onClick={() => setMobileMenuOpen(false)}>
+              Home
+            </StyledLink>
+            <StyledLink to="/about" active={location.pathname === "/about"} onClick={() => setMobileMenuOpen(false)}>
+              About Us
+            </StyledLink>
+            <StyledLink to="/contact" active={location.pathname === "/contact"} onClick={() => setMobileMenuOpen(false)}>
+              Contact Us
+            </StyledLink>
           </NavLinks>
 
           {!user && (
             <AuthContainer>
-              <AuthBtn to="/login" onClick={() => setMobileMenuOpen(false)}>Login</AuthBtn>
-              <AuthBtn to="/signup" onClick={() => setMobileMenuOpen(false)}>Signup</AuthBtn>
+              <AuthBtn to="/login" onClick={() => setMobileMenuOpen(false)}>
+                Login
+              </AuthBtn>
+              <AuthBtn to="/signup" onClick={() => setMobileMenuOpen(false)}>
+                Signup
+              </AuthBtn>
             </AuthContainer>
           )}
 
-          {/* For mobile menu, CartBtn is hidden since CartBtnMobile is visible */}
-          {user && (
-            <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>
-          )}
+          {/* Removed cart button from mobile menu */}
+
+          {user && <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>}
         </MobileMenuContainer>
 
         {/* Desktop menu */}
         <DesktopMenuContainer>
           <NavLinks>
-            <StyledLink to="/" active={location.pathname === "/"}>Home</StyledLink>
-            <StyledLink to="/about" active={location.pathname === "/about"}>About Us</StyledLink>
-            <StyledLink to="/contact" active={location.pathname === "/contact"}>Contact Us</StyledLink>
+            <StyledLink to="/" active={location.pathname === "/"}>
+              Home
+            </StyledLink>
+            <StyledLink to="/about" active={location.pathname === "/about"}>
+              About Us
+            </StyledLink>
+            <StyledLink to="/contact" active={location.pathname === "/contact"}>
+              Contact Us
+            </StyledLink>
           </NavLinks>
 
           {!user && (
@@ -445,7 +462,7 @@ const Navbar = () => {
             </AuthContainer>
           )}
 
-          <CartBtn onClick={() => navigate("/payment")} aria-label="Cart" title="Cart">
+          <CartBtn onClick={handleCartClick} aria-label="Cart" title="Cart">
             <CartIcon>
               <svg
                 width="23"
