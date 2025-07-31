@@ -13,6 +13,11 @@ const NavbarContainer = styled.header`
   top: 0;
   z-index: 100;
   padding: 1.1rem 0;
+
+  @media (max-width: 640px) {
+    padding: 0.8rem 0;
+    overflow-x: hidden;
+  }
 `;
 
 const NavContent = styled.div`
@@ -26,14 +31,12 @@ const NavContent = styled.div`
   position: relative;
 `;
 
-// Logo Container
 const LogoRow = styled.div`
   display: flex;
   align-items: center;
   flex-shrink: 0;
 `;
 
-// Logo Link
 const LogoWrapper = styled(Link)`
   display: flex;
   align-items: center;
@@ -41,7 +44,6 @@ const LogoWrapper = styled(Link)`
   text-decoration: none;
 `;
 
-// Logo Icon
 const LogoImg = styled.div`
   border-radius: 50%;
   background: #a89168;
@@ -56,7 +58,6 @@ const LogoImg = styled.div`
   color: #40652a;
 `;
 
-// Site title
 const SiteTitle = styled.span`
   font-size: 1.25rem;
   font-weight: bold;
@@ -64,7 +65,7 @@ const SiteTitle = styled.span`
   letter-spacing: 1px;
 `;
 
-// Auth Buttons
+// Auth Buttons container
 const AuthContainer = styled.div`
   display: flex;
   align-items: center;
@@ -73,11 +74,13 @@ const AuthContainer = styled.div`
   @media (max-width: 640px) {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
+    gap: 1rem;
     margin-top: 1rem;
+    width: 100%;
   }
 `;
 
+// Single Auth Button
 const AuthBtn = styled(Link)`
   background: #fffdf6;
   color: #40652a;
@@ -95,11 +98,12 @@ const AuthBtn = styled(Link)`
     background: #e6ebd7;
     color: #a89168;
     border-color: #b5996c;
+    outline: none;
   }
 
   @media (max-width: 640px) {
     margin-right: 0;
-    width: 100%; /* full width on small screens */
+    width: 100%;
     text-align: center;
   }
 `;
@@ -116,14 +120,9 @@ const NavLinks = styled.nav`
     gap: 1rem;
     margin-top: 1rem;
   }
-
-  /* Hide links on mobile by default and show when toggled */
-  &.mobile-hidden {
-    display: none;
-  }
 `;
 
-// Styled individual Link
+// Individual styled Link
 const StyledLink = styled(Link)`
   color: ${({ active }) => (active ? '#c4db8c' : '#fffdf6')};
   text-decoration: none;
@@ -134,8 +133,16 @@ const StyledLink = styled(Link)`
   border-bottom: ${({ active }) => (active ? '2px solid #a89168' : 'none')};
   transition: color 0.2s;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: #a89168;
+    outline: none;
+  }
+
+  @media (max-width: 640px) {
+    display: block;
+    padding: 0.5rem 0;
+    width: 100%;
   }
 `;
 
@@ -154,7 +161,8 @@ const CartBtn = styled.button`
   &:hover,
   &:focus {
     transform: scale(1.12);
-    outline: none;
+    outline: 2px solid #a89168;
+    outline-offset: 2px;
   }
 
   @media (max-width: 640px) {
@@ -195,8 +203,10 @@ const LogoutBtn = styled.button`
   cursor: pointer;
   transition: color 0.17s;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: #e9c46a;
+    outline: none;
   }
 
   @media (max-width: 640px) {
@@ -212,15 +222,46 @@ const MobileMenuButton = styled.button`
   color: #fff;
   cursor: pointer;
   display: none;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-left: auto;
+  padding: 0.3rem 0.5rem;
 
   @media (max-width: 640px) {
     display: block;
   }
+
+  &:focus {
+    outline: 2px solid #a89168;
+    outline-offset: 2px;
+  }
 `;
 
+// Mobile Menu Container
+const MobileMenuContainer = styled.div`
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 1rem;
 
+  &.open {
+    display: flex;
+  }
+`;
+
+// Desktop menu container - hide on mobile
+const DesktopMenuContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.3em;
+  margin-left: auto;
+
+  @media (max-width: 640px) {
+    display: none !important;
+  }
+`;
+
+// Main Navbar component
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -256,7 +297,6 @@ const Navbar = () => {
     localStorage.removeItem("mehndi_loggedin_user");
     setUser(null);
     navigate("/");
-    // Close mobile menu on logout for better UX
     setMobileMenuOpen(false);
   }
 
@@ -278,22 +318,15 @@ const Navbar = () => {
         {/* Mobile menu toggle button */}
         <MobileMenuButton
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileMenuOpen}
           onClick={toggleMobileMenu}
+          aria-controls="mobile-menu"
         >
           {mobileMenuOpen ? '✕' : '☰'}
         </MobileMenuButton>
 
-        {/* Nav links and auth, collapsible on mobile */}
-        <div
-          style={{
-            display: mobileMenuOpen ? "flex" : "none",
-            flexDirection: "column",
-            width: '100%',
-            marginTop: '1rem',
-            gap: "1rem",
-          }}
-          className="mobile-menu"
-        >
+        {/* Mobile menu */}
+        <MobileMenuContainer id="mobile-menu" className={mobileMenuOpen ? 'open' : ''}>
           <NavLinks>
             <StyledLink to="/" active={location.pathname === "/"} onClick={() => setMobileMenuOpen(false)}>Home</StyledLink>
             <StyledLink to="/about" active={location.pathname === "/about"} onClick={() => setMobileMenuOpen(false)}>About Us</StyledLink>
@@ -304,19 +337,22 @@ const Navbar = () => {
           {!user && (
             <AuthContainer>
               <AuthBtn to="/login" onClick={() => setMobileMenuOpen(false)}>Login</AuthBtn>
-              <AuthBtn to="/signup" style={{marginRight:0}} onClick={() => setMobileMenuOpen(false)}>Signup</AuthBtn>
+              <AuthBtn to="/signup" onClick={() => setMobileMenuOpen(false)}>Signup</AuthBtn>
             </AuthContainer>
           )}
 
           {/* Cart and logout for logged in user */}
           {user && (
-            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <CartBtn onClick={() => {navigate("/payment"); setMobileMenuOpen(false);}} aria-label="Cart">
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: 'wrap', width: '100%' }}>
+              <CartBtn
+                onClick={() => { navigate("/payment"); setMobileMenuOpen(false); }}
+                aria-label="Cart"
+              >
                 <CartIcon>
-                  <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
-                    <circle cx="12" cy="23" r="1.6" fill="#a89168"/>
-                    <circle cx="21" cy="23" r="1.6" fill="#a89168"/>
-                    <path d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1" stroke="#fff" strokeWidth="1.6" fill="none"/>
+                  <svg width="27" height="27" viewBox="0 0 27 27" fill="none" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="23" r="1.6" fill="#a89168" />
+                    <circle cx="21" cy="23" r="1.6" fill="#a89168" />
+                    <path d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1" stroke="#fff" strokeWidth="1.6" fill="none" />
                   </svg>
                   {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
                 </CartIcon>
@@ -325,19 +361,11 @@ const Navbar = () => {
               <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>
             </div>
           )}
-        </div>
+        </MobileMenuContainer>
 
-        {/* Desktop nav layout (hidden on mobile) */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "1.3em",
-            marginLeft: "auto",
-          }}
-          className="desktop-menu"
-        >
-          <NavLinks className="nav-links-desktop">
+        {/* Desktop menu visible only on desktop */}
+        <DesktopMenuContainer>
+          <NavLinks>
             <StyledLink to="/" active={location.pathname === "/"}>Home</StyledLink>
             <StyledLink to="/about" active={location.pathname === "/about"}>About Us</StyledLink>
             <StyledLink to="/contact" active={location.pathname === "/contact"}>Contact Us</StyledLink>
@@ -346,28 +374,23 @@ const Navbar = () => {
           {!user && (
             <AuthContainer>
               <AuthBtn to="/login">Login</AuthBtn>
-              <AuthBtn to="/signup" style={{ marginRight: 0 }}>Signup</AuthBtn>
+              <AuthBtn to="/signup">Signup</AuthBtn>
             </AuthContainer>
           )}
 
           <CartBtn onClick={() => navigate("/payment")} aria-label="Cart">
             <CartIcon>
-              <svg width="27" height="27" viewBox="0 0 27 27" fill="none">
+              <svg width="27" height="27" viewBox="0 0 27 27" fill="none" aria-hidden="true" focusable="false">
                 <circle cx="12" cy="23" r="1.6" fill="#a89168" />
                 <circle cx="21" cy="23" r="1.6" fill="#a89168" />
-                <path
-                  d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1"
-                  stroke="#fff"
-                  strokeWidth="1.6"
-                  fill="none"
-                />
+                <path d="M4 5h2.6l2.1 11.5a2 2 0 0 0 2 1.5h7.5a2 2 0 0 0 2-1.6L22 8.7a1 1 0 0 0-1-1.2H7.1" stroke="#fff" strokeWidth="1.6" fill="none" />
               </svg>
               {cartCount > 0 && <CartBadge>{cartCount}</CartBadge>}
             </CartIcon>
           </CartBtn>
 
           {user && <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>}
-        </div>
+        </DesktopMenuContainer>
       </NavContent>
     </NavbarContainer>
   );
