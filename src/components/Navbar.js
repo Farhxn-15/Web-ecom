@@ -37,7 +37,8 @@ const NavContent = styled.div`
 const LogoRow = styled.div`
   display: flex;
   align-items: center;
-  flex-shrink: 0;
+  min-width: 0;  /* NEW: allow text to shrink */
+  flex-shrink: 1;
 `;
 
 const LogoWrapper = styled(Link)`
@@ -71,14 +72,15 @@ const SiteTitle = styled.span`
   font-size: 1.1rem;
   font-weight: bold;
   color: #fff8f0;
-  letter-spacing: 0.5px;
-  @media (max-width: 640px) {
-    font-size: 0.97rem;
-    letter-spacing: 0.2px;
-    max-width: 120px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  letter-spacing: 0.2px;
+  /* Remove forced max-width and white-space if present */
+  @media (max-width: 500px) {
+    font-size: 1rem;
+    max-width: unset;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    display: block;
   }
 `;
 
@@ -164,26 +166,19 @@ const StyledLink = styled(Link)`
 
 // Cart Button and Badge
 const CartBtn = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.15em 0.4em;
-  display: flex;
-  align-items: center;
-  transition: transform 0.13s;
-  margin-left: 1em;
-  position: relative;
-  &:hover,
-  &:focus {
-    transform: scale(1.09);
-    outline: 2px solid #a89168;
-    outline-offset: 2px;
-  }
+  /* ...existing styles... */
   @media (max-width: 640px) {
-    margin: 0.6rem 0 0 0;
-    align-self: flex-start;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-left: 0;
+    align-self: stretch;
+    justify-content: center;
     padding-left: 0;
     padding-right: 0;
+    min-width: 0;
+
+    svg { width: 20px; height: 20px; }
+    span { margin-left: 6px; font-size: 13px; }
   }
 `;
 
