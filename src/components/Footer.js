@@ -256,7 +256,7 @@ export default function Footer() {
           <strong style={{color:"#ffc", fontSize:"1.07em", marginBottom:"0.38em", display: 'block', textAlign: 'center'}}>Follow Us</strong>
           <SocialRow>
             <IconLink
-              href="https://instagram.com/yourpage"
+              href="https://www.instagram.com/creative_world1301?igsh=dXk3YmU1ajNjZ2w2"
               target="_blank"
               aria-label="Instagram"
               rel="noopener noreferrer"
@@ -268,13 +268,13 @@ export default function Footer() {
               rel="noopener noreferrer"
             >{icons.facebook}</IconLink>
             <IconLink
-              href="https://youtube.com/yourchannel"
+              href="https://youtube.com/@samrinmehndiart?si=OvK4I7_KnjosQbJV"
               target="_blank"
               aria-label="YouTube"
               rel="noopener noreferrer"
             >{icons.youtube}</IconLink>
             <IconLink
-              href="https://wa.me/yourphonenumber"
+              href="https://wa.me/7295077585"
               target="_blank"
               aria-label="WhatsApp"
               rel="noopener noreferrer"
@@ -311,7 +311,7 @@ export default function Footer() {
       </Container>
       <BottomRow>
         <div>
-          © 2025 OrganicMehndi. All rights reserved.
+          © 2025 Developed by Farhan. All rights reserved.
         </div>
         <Policies>
           <Link to="/privacy-policy">Privacy Policy</Link>

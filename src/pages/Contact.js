@@ -5,7 +5,7 @@ import styled from "styled-components";
 const CONTACT_LINKS = [
   {
     name: "Instagram",
-    url: "https://www.instagram.com/creative_world1301/",
+    url: "https://www.instagram.com/creative_world1301?igsh=dXk3YmU1ajNjZ2w2",
     color: "#E1306C",
     icon: (
       <svg width="34" height="34" viewBox="0 0 60 60" fill="none" aria-hidden="true" focusable="false">
@@ -29,7 +29,7 @@ const CONTACT_LINKS = [
   },
   {
     name: "YouTube",
-    url: "https://www.youtube.com/@samrinmehndiart",
+    url: "https://youtube.com/@samrinmehndiart?si=OvK4I7_KnjosQbJV",
     color: "#FF0000",
     icon: (
       <svg width="34" height="34" viewBox="0 0 60 60" fill="none" aria-hidden="true" focusable="false">

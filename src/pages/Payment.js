@@ -188,7 +188,7 @@ export default function Payment() {
   const [payMethod, setPayMethod] = useState("UPI");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(15 * 60); // 15 minutes in seconds
+  const [timer, setTimer] = useState(2 * 60); // 2 minutes in seconds
 
   const nav = useNavigate();
 
@@ -262,7 +262,7 @@ export default function Payment() {
         <MainBox style={{ justifyContent: "center", alignItems: "center", minHeight: 420 }}>
           <SuccessMsg>
             <div style={{ color: "#40652a", fontWeight: "bold", fontSize: "1.25em", marginBottom: 6 }}>
-              Step 2: Make Payment via UPI
+              Announcement !!
             </div>
             {/* --- TIMER DISPLAY --- */}
             <div style={{
@@ -272,11 +272,11 @@ export default function Payment() {
               marginBottom: 15,
               letterSpacing: 1
             }}>
-              Time left to pay: <span>{formatTime(timer)}</span>
+              Returning to Home screen: <span>{formatTime(timer)}</span>
             </div>
             <div style={{ margin: "1.3em 0" }}>
               <img
-                src="/qr.jpg"
+                src="/qr.png"
                 alt="UPI QR"
                 style={{ maxWidth: 260, width: "100%", borderRadius: 10, boxShadow: "0 2px 16px #8bb45622" }}
               />
@@ -293,9 +293,9 @@ export default function Payment() {
                   fontFamily: "monospace",
                   cursor: "pointer"
                 }}
-                title="Click to copy UPI ID"
+                title="Click to copy Instagram Username"
               >
-                7295077585@ptsbi
+                @creative_world1301
               </span>
               <span style={{
                 marginLeft: 8,
@@ -304,9 +304,11 @@ export default function Payment() {
               }}>(Click to copy)</span>
             </div>
             <div style={{ color: "#a59743", marginBottom: "0.5em" }}>
-              Please scan the QR above or pay to the UPI ID.<br />
-              After payment send your payment screenshot to our insta page/whatsapp number.<br />
-              (We will verify and confirm your order soon!)
+              Due to temporary issues with our delivery partner, we are currently unable to accept online orders.
+
+Please check back soon — we’ll be up and running shortly!<br />
+              For urgent inquiries or to place an order manually, reach out to us on Instagram (@creative_world1301) or WhatsApp.<br />
+              (Thank you for your understanding and continued support.)
             </div>
             <button
               style={{
@@ -324,7 +326,7 @@ export default function Payment() {
               disabled={timer === 0}
               onClick={() => { window.location.href = "/" }}
             >
-              Done / Go Home
+              Return Home
             </button>
             {timer === 0 && (
               <div style={{ color: "#bb2d2d", fontWeight: 700, marginTop: 24 }}>
