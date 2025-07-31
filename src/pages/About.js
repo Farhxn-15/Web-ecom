@@ -293,12 +293,92 @@ export default function About() {
     <>
       <Page>
         <Container>
-          {/* ABOUT TEXT */}
+          {/* ABOUT US TOP */}
           <Heading>About Us</Heading>
+
           <Desc>
             Rooted in Nature. Crafted with Care. Trusted by You. 🌿
           </Desc>
-          {/* ...Keep your rest of <Desc> elements here, unchanged... */}
+
+          <Desc>
+            At <b>Samrin Organic Mehndi</b>, we believe that beauty should never come at the cost of health or tradition. That’s why we are dedicated to offering pure, authentic, and 100% organic mehndi — made with love, honesty, and a deep respect for nature.
+          </Desc>
+
+          <Desc>
+            We are a home-grown, family-run business with a modern vision and traditional soul. Har cone aur powder jo hum banate hain, uske peeche ek hi soch hoti hai — ki aapko mile sabse shudh aur natural mehndi, jo safe bhi ho aur beautiful bhi. Our products reflect everything we stand for — clean ingredients, simple processes, aur honest results.
+          </Desc>
+
+          <Desc>
+            🌿 What We Do
+          </Desc>
+
+          <Desc>
+            We create premium-quality mehndi using handpicked henna leaves, which are sun-dried, stone-ground, and carefully packed — bina kisi chemical ya artificial additive ke. Har step hum khud handle karte hain, taaki mehndi ka asli rang, mitti ki khushboo, aur softness bilkul waise hi bani rahe jaise nature ne banayi ho.
+          </Desc>
+
+          <Desc>
+            Hamari mehndi:
+          </Desc>
+
+          <Desc>
+            Deti hai rich, deep stain<br />
+            Hai gentle on all skin types<br />
+            No PPD, no synthetic dyes<br />
+            Natural fragrance ke saath aati hai<br />
+            Kaam karti hai hands, feet aur hair pe equally well
+          </Desc>
+
+          <Desc>
+            Chahe aap bride ho ya bridesmaid, karwa chauth manaa rahe ho ya Eid — ya sirf ek shaant Sunday ko mehndi lagake relax karna chahte ho — <b>Samrin Organic Mehndi</b> hamesha ready hai aapke special moments ko aur bhi khubsurat banane ke liye.
+          </Desc>
+
+          <Desc>
+            💚 Why Customers Love Us
+          </Desc>
+
+          <Desc>
+            Market mehndi products mein chemical bhare hote hain. Par hum offer karte hain ek natural, safe alternative jo customers truly trust.
+          </Desc>
+
+          <Desc>
+            ✅ Authenticity you can feel — koi shortcuts nahi<br />
+            ✅ Smooth flow & easy application — artists ke favourite<br />
+            ✅ Visible results in just 30–60 minutes<br />
+            ✅ Safe for kids and sensitive skin too<br />
+            ✅ Eco-friendly & hygienic packaging
+          </Desc>
+
+          <Desc>
+            From casual users to pro mehndi artists, log hamare product ko sirf use nahi karte — woh isse feel karte hain. And that’s what sets <b>Samrin Organic Mehndi</b> apart.
+          </Desc>
+
+          <Desc>
+            ✨ Our Mission
+          </Desc>
+
+          <Desc>
+            We’re not just selling mehndi — hum ek tradition ko revive kar rahe hain, in a way that’s modern, clean, and inclusive.
+          </Desc>
+
+          <Desc>
+            Our goal is to:<br />
+            Promote organic Indian beauty rituals<br />
+            Encourage people to embrace natural living<br />
+            Build a community that values safe and honest self-care
+          </Desc>
+
+          <Desc>
+            🙏 Thank You for Believing in Us
+          </Desc>
+
+          <Desc>
+            Jab aap <b>Samrin Organic Mehndi</b> choose karte ho, aap sirf ek product nahi — ek sapna aur ek purpose ko support kar rahe hote ho.
+          </Desc>
+
+          <Desc>
+            We’re here because of your trust, and we promise to keep working hard to deliver mehndi that’s natural, beautiful, and truly trusted.
+          </Desc>
+
           <Desc>
             From our hands to yours — with care.<br />
             – Team <b>Samrin Organic Mehndi</b> 💚
